@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#844D68" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Stamp perforated border -->
+  <rect x="5" y="5" width="110" height="140" rx="3" fill="#FFFBF5" stroke="#E6C8B5" stroke-width="2" stroke-dasharray="6,4" filter="url(#shadow)"/>
+  <rect x="12" y="12" width="96" height="126" fill="#FCE7EC" rx="2"/>
+  <rect x="15" y="15" width="90" height="120" fill="none" stroke="#D98299" stroke-width="1"/>
+
+  <!-- Botanical / Heart art -->
+  <path d="M 60,65 C 60,65 35,45 35,30 C 35,20 42,14 50,14 C 55,14 58,17 60,20 C 62,17 65,14 70,14 C 78,14 85,20 85,30 C 85,45 60,65 60,65 Z" fill="#EE6B8B"/>
+  <circle cx="50" cy="25" r="3" fill="#FFF" opacity="0.6"/>
+
+  <!-- Floral sprigs -->
+  <path d="M 40,85 Q 50,75 60,82 Q 70,75 80,85" stroke="#844D68" stroke-width="1.5" fill="none"/>
+  <path d="M 50,80 Q 45,72 40,75" stroke="#844D68" stroke-width="1.5" fill="none"/>
+  <path d="M 70,80 Q 75,72 80,75" stroke="#844D68" stroke-width="1.5" fill="none"/>
+
+  <!-- Postmark lines -->
+  <text x="60" y="105" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#844D68" letter-spacing="1.5">FIRST CLASS</text>
+  <text x="60" y="118" text-anchor="middle" font-family="'Caveat', cursive" font-size="13" font-weight="700" fill="#EE6B8B">With Love</text>
+  <text x="60" y="130" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="600" fill="#B3889B">∞ FOREVER</text>
+</svg>
+

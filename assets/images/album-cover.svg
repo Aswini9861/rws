@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="skyGrad" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#FFE4E8"/>
+      <stop offset="45%" stop-color="#F3C4D6"/>
+      <stop offset="85%" stop-color="#B8A4D9"/>
+      <stop offset="100%" stop-color="#83699F"/>
+    </radialGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF0"/>
+      <stop offset="100%" stop-color="#FDE8C7"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="30" fill="url(#skyGrad)"/>
+
+  <!-- Stars -->
+  <g fill="#FFFFFF" opacity="0.8">
+    <circle cx="60" cy="70" r="2"/>
+    <circle cx="110" cy="40" r="1.5"/>
+    <circle cx="320" cy="65" r="2.5"/>
+    <circle cx="360" cy="120" r="1.5"/>
+    <circle cx="70" cy="180" r="1.5"/>
+    <circle cx="340" cy="220" r="2"/>
+    <!-- Sparkle star -->
+    <path d="M 280,80 Q 280,95 295,95 Q 280,95 280,110 Q 280,95 265,95 Q 280,95 280,80 Z" fill="#FFF"/>
+    <path d="M 100,110 Q 100,120 110,120 Q 100,120 100,130 Q 100,120 90,120 Q 100,120 100,110 Z" fill="#FFF" opacity="0.7"/>
+  </g>
+
+  <!-- Soft Crescent / Full Glowing Moon -->
+  <circle cx="200" cy="170" r="70" fill="url(#moonGrad)" filter="url(#softGlow)"/>
+
+  <!-- Floating Silhouette Clouds -->
+  <path d="M 50,300 C 60,260 120,260 150,290 C 180,270 230,270 250,295 C 290,280 340,300 360,330 L 50,330 Z" fill="url(#cloudGrad)"/>
+  <path d="M 120,330 C 150,290 220,290 260,320 C 290,305 340,315 370,350 L 80,350 Z" fill="#FFFFFF" opacity="0.6"/>
+
+  <!-- Romantic Heart Outline in center -->
+  <path d="M 200,215 C 200,215 155,180 155,150 C 155,130 170,118 185,118 C 193,118 200,125 200,125 C 200,125 207,118 215,118 C 230,118 245,130 245,150 C 245,180 200,215 200,215 Z" 
+        fill="#FF6B8B" opacity="0.85" filter="url(#softGlow)"/>
+
+  <!-- Cassette / Vinyl Decorative Text -->
+  <text x="200" y="372" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" letter-spacing="3" opacity="0.95">OUR SWEET MELODY</text>
+</svg>
+

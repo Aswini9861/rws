@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A cute, romantic, interactive surprise website made with love for someone truly special.">
+  <meta name="theme-color" content="#FCE7EC">
+  
+  <title>A Special Surprise For You ❤️</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dancing+Script:wght@500;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="pastel">
+
+  <!-- ========================================================
+       PRELOADER
+       ======================================================== -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="beating-heart-loader">
+        <svg viewBox="0 0 100 100" class="heart-icon-svg">
+          <path d="M 50,85 C 50,85 15,58 15,32 C 15,18 26,10 37,10 C 44,10 48,15 50,19 C 52,15 56,10 63,10 C 74,10 85,18 85,32 C 85,58 50,85 50,85 Z" />
+        </svg>
+      </div>
+      <p class="preloader-text">Preparing something special for you... ✨</p>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       BACKGROUND CANVAS (FLOATING HEARTS & SPARKLES)
+       ======================================================== -->
+  <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========================================================
+       HOMEPAGE CURTAIN / WELCOME SCREEN
+       ======================================================== -->
+  <section id="welcome-screen" class="welcome-screen">
+    <div class="welcome-container">
+      <div class="welcome-badge">
+        <span class="sparkle-icon">✨</span>
+        <span>A Special Surprise</span>
+        <span class="sparkle-icon">✨</span>
+      </div>
+
+      <!-- Glowing Animated Heart -->
+      <div class="welcome-heart-wrapper">
+        <div class="heart-pulse-ring ring-1"></div>
+        <div class="heart-pulse-ring ring-2"></div>
+        <div class="welcome-heart" id="welcome-heart-btn" title="Click me for love!">
+          <svg viewBox="0 0 100 100" class="heart-svg">
+            <defs>
+              <linearGradient id="heroHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF758C" />
+                <stop offset="100%" stop-color="#FF7EB3" />
+              </linearGradient>
+            </defs>
+            <path d="M 50,85 C 50,85 15,58 15,32 C 15,18 26,10 37,10 C 44,10 48,15 50,19 C 52,15 56,10 63,10 C 74,10 85,18 85,32 C 85,58 50,85 50,85 Z" fill="url(#heroHeartGrad)"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="welcome-title">Hey, Beautiful! ❤️</h1>
+      <p class="welcome-message">
+        I made something special just for you.<br>
+        I hope this little surprise makes you smile.
+      </p>
+
+      <button id="open-surprise-btn" class="btn btn-primary btn-sparkle" type="button">
+        <span class="btn-text">Open Your Surprise ❤️</span>
+        <span class="btn-shine"></span>
+      </button>
+
+      <div class="welcome-hint">
+        <small>Put your sound on for the best experience 🎧</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       MAIN SITE CONTENT (Revealed after clicking "Open Your Surprise")
+       ======================================================== -->
+  <div id="main-content" class="main-content is-hidden">
+    
+    <!-- Navigation Bar -->
+    <header class="navbar" id="navbar">
+      <div class="navbar-brand">
+        <span class="brand-heart">💖</span>
+        <span class="brand-name">Just For You</span>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="#reasons" class="nav-item">Reasons</a>
+        <a href="#letter" class="nav-item">Letter</a>
+        <a href="#quiz" class="nav-item">Game</a>
+        <a href="#compliments" class="nav-item">Smiles</a>
+        <a href="#gifts" class="nav-item">Gifts</a>
+        <a href="#music" class="nav-item">Music</a>
+        <a href="#finale" class="nav-item">Finale</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Sound FX Toggle -->
+        <button id="sound-toggle-btn" class="icon-btn" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+          <span class="icon" id="sound-icon">🔔</span>
+        </button>
+        <!-- Theme Switcher (Pastel / Twilight) -->
+        <button id="theme-toggle-btn" class="icon-btn" title="Switch Theme (Pastel / Starlight)" aria-label="Switch Theme">
+          <span class="icon" id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="content-wrapper">
+
+      <!-- ========================================================
+           SECTION 1: REASONS WHY YOU'RE SPECIAL
+           ======================================================== -->
+      <section id="reasons" class="section section-reasons">
+        <div class="section-header">
+          <span class="section-tag">Little Reminders</span>
+          <h2 class="section-title">Reasons Why You're Special ❤️</h2>
+          <p class="section-subtitle">
+            Just a few of the countless little things that make you one of a kind. Click each card to reveal!
+          </p>
+          <div class="reasons-progress-wrap">
+            <span class="progress-label">Discovered: <strong id="reasons-counter">0</strong> / 8</span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="reasons-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reasons-grid" id="reasons-grid">
+          <!-- Card 1 -->
+          <div class="reason-card" data-id="1">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">✨</div>
+                <h3 class="card-front-title">Your Beautiful Smile</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">😊</div>
+                <h3 class="card-back-title">Your Beautiful Smile</h3>
+                <p class="card-back-text">
+                  The way your whole face lights up whenever you smile is pure magic. It has this effortless way of making everything around you feel warmer and brighter.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="reason-card" data-id="2">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">🌟</div>
+                <h3 class="card-front-title">Your Lovely Eyes</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">👀</div>
+                <h3 class="card-back-title">Your Lovely Eyes</h3>
+                <p class="card-back-text">
+                  There is a whole galaxy of kindness and depth in your eyes. Looking at you makes the entire noisy world go quiet for a moment.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="reason-card" data-id="3">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">💬</div>
+                <h3 class="card-front-title">Our Conversations</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">☕</div>
+                <h3 class="card-back-title">Our Conversations</h3>
+                <p class="card-back-text">
+                  The way you make ordinary conversations so special. We could be talking about silly memes or deep midnight thoughts, and every second feels precious.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="reason-card" data-id="4">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">🌸</div>
+                <h3 class="card-front-title">You Make Me Smile</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">🥰</div>
+                <h3 class="card-back-title">You Make Me Smile</h3>
+                <p class="card-back-text">
+                  How you make me smile without even trying. Just seeing your name pop up on my screen instantly turns around the hardest day.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="reason-card" data-id="5">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">💖</div>
+                <h3 class="card-front-title">Simply Because You're You</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">🦋</div>
+                <h3 class="card-back-title">Simply Because You're You</h3>
+                <p class="card-back-text">
+                  You don't need to change a single thing or try to impress anyone. The authentic, caring, adorable person you are is more than enough—it's everything.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="reason-card" data-id="6">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">🕊️</div>
+                <h3 class="card-front-title">Your Gentle Heart</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">🌷</div>
+                <h3 class="card-back-title">Your Gentle Heart</h3>
+                <p class="card-back-text">
+                  Your empathy, tenderness, and genuine care for others are rare treasures in this world. Your heart is as golden as it gets.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="reason-card" data-id="7">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">🎶</div>
+                <h3 class="card-front-title">Your Cute Laugh</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">🧸</div>
+                <h3 class="card-back-title">Your Cute Laugh</h3>
+                <p class="card-back-text">
+                  Hearing you laugh is genuinely my favorite sound in the world. It’s infectious, adorable, and I'd do silly things all day just to hear it again.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="reason-card" data-id="8">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-icon-badge">🏡</div>
+                <h3 class="card-front-title">You Feel Like Home</h3>
+                <span class="tap-hint">Tap to unlock 💖</span>
+              </div>
+              <div class="card-back">
+                <div class="card-back-icon">🌟</div>
+                <h3 class="card-back-title">You Feel Like Home</h3>
+                <p class="card-back-text">
+                  In a restless, fast-moving world, you give me a sense of peace and comfort that I didn't know I was searching for. You just feel right.
+                </p>
+                <span class="card-unlocked-badge">Unlocked ❤️</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="all-reasons-celebration" class="all-reasons-celebration is-hidden">
+          <div class="celebration-badge">
+            <span>🎉 You discovered all 8 reasons! (Though honestly, there are a million more... ✨)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 2: A LITTLE LOVE LETTER
+           ======================================================== -->
+      <section id="letter" class="section section-letter">
+        <div class="section-header">
+          <span class="section-tag">From My Heart</span>
+          <h2 class="section-title">A Little Love Letter 💌</h2>
+          <p class="section-subtitle">
+            I wrote something for you. Click on the envelope to open and read what's inside.
+          </p>
+        </div>
+
+        <div class="envelope-interactive-area">
+          <div class="envelope-wrapper" id="envelope-wrapper">
+            <!-- Envelope 3D Structure -->
+            <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open Love Letter Envelope">
+              <!-- Back Flap -->
+              <div class="envelope-back"></div>
+
+              <!-- Sliding Letter Paper -->
+              <div class="letter-paper" id="letter-paper">
+                <div class="letter-paper-inner">
+                  <div class="letter-header">
+                    <img src="assets/images/stamp.svg" alt="Postage Stamp" class="letter-stamp">
+                    <div class="letter-meta">
+                      <span class="letter-date">Today & Always</span>
+                      <span class="letter-to">To Someone Very Special,</span>
+                    </div>
+                  </div>
+
+                  <div class="letter-body">
+                    <p class="letter-paragraph">
+                      I don't know how to explain it perfectly, but talking to you has become one of my favourite parts of the day. You make ordinary moments feel special, and I hope I can keep making you smile.
+                    </p>
+                    <p class="letter-paragraph">
+                      Whenever the world feels a little overwhelming or loud, just thinking about your warmth brings a gentle peace over me. Thank you for your kindness, your sweet humor, and for simply being who you are.
+                    </p>
+                    <p class="letter-paragraph">
+                      I made this little surprise world just to bring a smile to your face today. You deserve all the happiness this universe has to offer, and so much more.
+                    </p>
+                  </div>
+
+                  <div class="letter-footer">
+                    <p class="letter-sign">Always smiling because of you,</p>
+                    <p class="letter-signature">With all my love ❤️</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Envelope Pocket (Front Panels) -->
+              <div class="envelope-front-pocket"></div>
+              
+              <!-- Envelope Flap (Top Triangle) -->
+              <div class="envelope-flap" id="envelope-flap"></div>
+
+              <!-- Wax Seal Button -->
+              <div class="envelope-wax-seal" id="wax-seal">
+                <div class="seal-inner">
+                  <span class="seal-heart">❤️</span>
+                </div>
+                <span class="seal-tooltip">Click to Open</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Letter Controls -->
+          <div class="letter-controls" id="letter-controls">
+            <button id="toggle-letter-btn" class="btn btn-secondary" type="button">
+              <span id="letter-btn-text">Open Envelope 💌</span>
+            </button>
+            <button id="fullscreen-letter-btn" class="btn btn-outline is-hidden" type="button">
+              <span>Read Full Screen 📜</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 3: OUR CUTE QUESTION GAME
+           ======================================================== -->
+      <section id="quiz" class="section section-quiz">
+        <div class="section-header">
+          <span class="section-tag">Playful Moments</span>
+          <h2 class="section-title">Our Cute Question Game 🎮</h2>
+          <p class="section-subtitle">
+            Let's see how well we match! Pick the answer that feels right to you.
+          </p>
+        </div>
+
+        <div class="quiz-container">
+          <div class="quiz-card" id="quiz-card">
+            <!-- Quiz Stepper Header -->
+            <div class="quiz-status-bar">
+              <div class="quiz-progress-hearts" id="quiz-progress-hearts">
+                <!-- Dynamically generated heart nodes -->
+              </div>
+              <span class="quiz-step-count" id="quiz-step-count">Question 1 of 7</span>
+            </div>
+
+            <!-- Question Area -->
+            <div class="quiz-question-wrap">
+              <h3 class="quiz-question-text" id="quiz-question-text">
+                Who is more likely to fall asleep during a call? 😴
+              </h3>
+            </div>
+
+            <!-- Choices Grid -->
+            <div class="quiz-options-grid" id="quiz-options-grid">
+              <!-- Dynamically populated options -->
+            </div>
+
+            <!-- Reaction Feedback Box -->
+            <div class="quiz-feedback-box is-hidden" id="quiz-feedback-box">
+              <div class="feedback-bubble">
+                <span class="feedback-emoji" id="feedback-emoji">🥰</span>
+                <p class="feedback-text" id="feedback-text">Haha! Totally agreed!</p>
+              </div>
+              <button id="next-question-btn" class="btn btn-primary btn-sm">
+                <span>Next Question ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Completion Result Card (Hidden initially) -->
+          <div class="quiz-result-card is-hidden" id="quiz-result-card">
+            <div class="result-badge">🏆 1000% MATCH!</div>
+            <h3 class="result-title">We are officially the cutest duo! 🎉</h3>
+            <p class="result-description">
+              Whether we're laughing at silly jokes, falling asleep on calls, or planning cozy dates, there is no one else I'd rather share these moments with.
+            </p>
+            <div class="result-stars">⭐⭐⭐⭐⭐</div>
+            <button id="restart-quiz-btn" class="btn btn-secondary">Play Again 🔄</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 4: A CUTE COMPLIMENT MACHINE
+           ======================================================== -->
+      <section id="compliments" class="section section-compliments">
+        <div class="section-header">
+          <span class="section-tag">Instant Sunshine</span>
+          <h2 class="section-title">A Cute Compliment Machine ✨</h2>
+          <p class="section-subtitle">
+            Whenever you need a little reminder of how wonderful you are, just press the button!
+          </p>
+        </div>
+
+        <div class="compliment-machine-wrap">
+          <div class="compliment-bubble-card">
+            <div class="quote-mark open">“</div>
+            <div class="compliment-display" id="compliment-display">
+              <p class="compliment-text" id="compliment-text">
+                You're prettier than the stars tonight. ✨
+              </p>
+            </div>
+            <div class="quote-mark close">”</div>
+
+            <div class="compliment-stats">
+              <span class="smiles-counter">
+                💖 Smiles Delivered: <strong id="smiles-count">1</strong>
+              </span>
+            </div>
+
+            <div class="compliment-actions">
+              <button id="new-compliment-btn" class="btn btn-primary btn-sparkle" type="button">
+                <span class="btn-text">Need a little smile? ✨</span>
+                <span class="btn-shine"></span>
+              </button>
+              <button id="copy-compliment-btn" class="btn btn-outline btn-sm" title="Copy this compliment">
+                <span>Copy 📋</span>
+              </button>
+            </div>
+
+            <div id="copy-toast" class="toast is-hidden">Copied to clipboard! 💖</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 5: REASONS TO SMILE - SURPRISE BOXES
+           ======================================================== -->
+      <section id="gifts" class="section section-gifts">
+        <div class="section-header">
+          <span class="section-tag">Little Treasures</span>
+          <h2 class="section-title">Reasons to Smile – Surprise Boxes 🎁</h2>
+          <p class="section-subtitle">
+            Five mystery gift boxes packed with love. Click on each box to see what's inside!
+          </p>
+        </div>
+
+        <div class="gifts-grid">
+          <!-- Box 1 -->
+          <div class="gift-box-item" data-box="1">
+            <div class="gift-box-wrap">
+              <div class="gift-lid">
+                <div class="ribbon-bow">🎀</div>
+              </div>
+              <div class="gift-body box-color-1">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <span class="gift-label">Box 1</span>
+              </div>
+            </div>
+            <span class="gift-status">Click to Open 🎁</span>
+          </div>
+
+          <!-- Box 2 -->
+          <div class="gift-box-item" data-box="2">
+            <div class="gift-box-wrap">
+              <div class="gift-lid">
+                <div class="ribbon-bow">🎀</div>
+              </div>
+              <div class="gift-body box-color-2">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <span class="gift-label">Box 2</span>
+              </div>
+            </div>
+            <span class="gift-status">Click to Open 🎁</span>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="gift-box-item" data-box="3">
+            <div class="gift-box-wrap">
+              <div class="gift-lid">
+                <div class="ribbon-bow">🎀</div>
+              </div>
+              <div class="gift-body box-color-3">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <span class="gift-label">Box 3</span>
+              </div>
+            </div>
+            <span class="gift-status">Click to Open 🎁</span>
+          </div>
+
+          <!-- Box 4 -->
+          <div class="gift-box-item" data-box="4">
+            <div class="gift-box-wrap">
+              <div class="gift-lid">
+                <div class="ribbon-bow">🎀</div>
+              </div>
+              <div class="gift-body box-color-4">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <span class="gift-label">Box 4</span>
+              </div>
+            </div>
+            <span class="gift-status">Click to Open 🎁</span>
+          </div>
+
+          <!-- Box 5 -->
+          <div class="gift-box-item" data-box="5">
+            <div class="gift-box-wrap">
+              <div class="gift-lid">
+                <div class="ribbon-bow">🎀</div>
+              </div>
+              <div class="gift-body box-color-5">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <span class="gift-label">Box 5</span>
+              </div>
+            </div>
+            <span class="gift-status">Click to Open 🎁</span>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="gifts-reset-wrap">
+          <button id="reset-boxes-btn" class="btn btn-outline btn-sm">Reset All Boxes 🔄</button>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 6: A LITTLE MUSIC CORNER
+           ======================================================== -->
+      <section id="music" class="section section-music">
+        <div class="section-header">
+          <span class="section-tag">Our Soundtrack</span>
+          <h2 class="section-title">A Little Music Corner 🎵</h2>
+          <p class="section-subtitle">
+            A soft, soothing melody made just for this moment. Hit play whenever you're ready!
+          </p>
+        </div>
+
+        <div class="music-player-card">
+          <!-- Vinyl Player Visual -->
+          <div class="vinyl-display">
+            <div class="vinyl-record" id="vinyl-record">
+              <div class="vinyl-groove groove-1"></div>
+              <div class="vinyl-groove groove-2"></div>
+              <div class="vinyl-center">
+                <img src="assets/images/album-cover.svg" alt="Album Cover" class="album-artwork">
+              </div>
+            </div>
+            <div class="tone-arm" id="tone-arm"></div>
+          </div>
+
+          <!-- Player Controls & Info -->
+          <div class="player-details">
+            <div class="song-meta">
+              <h3 class="song-title">Our Sweet Melody</h3>
+              <p class="song-artist">Crafted with love for you 🎧</p>
+            </div>
+
+            <!-- Audio Equalizer Visualizer -->
+            <div class="visualizer-bars" id="visualizer-bars" aria-hidden="true">
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="player-timeline">
+              <span class="time-current" id="time-current">0:00</span>
+              <div class="timeline-slider" id="timeline-slider">
+                <div class="timeline-fill" id="timeline-fill" style="width: 0%"></div>
+              </div>
+              <span class="time-total" id="time-total">0:27</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="player-controls">
+              <button id="replay-btn" class="btn-audio-ctrl" title="Restart Song">⏮️</button>
+              <button id="play-pause-btn" class="btn-play-pause" title="Play Melody">
+                <span id="play-icon">▶️</span>
+              </button>
+              <button id="volume-toggle-btn" class="btn-audio-ctrl" title="Mute/Unmute">🔊</button>
+            </div>
+
+            <div class="volume-slider-wrap">
+              <label for="volume-slider" class="sr-only">Volume Control</label>
+              <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.75" class="volume-slider">
+            </div>
+
+            <small class="music-note-hint">
+              🌸 Gentle note: you can replace or add your own MP3 in <code>assets/music/</code> anytime!
+            </small>
+          </div>
+
+          <!-- Native Audio Tag Fallback -->
+          <audio id="bg-audio" preload="auto">
+            <source src="assets/music/romantic-melody.mp3" type="audio/mpeg">
+            <source src="assets/music/romantic-melody.wav" type="audio/wav">
+            Your browser does not support audio playback.
+          </audio>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION 7: THE FINAL SURPRISE
+           ======================================================== -->
+      <section id="finale" class="section section-finale">
+        <div class="finale-card">
+          <div class="finale-heart-halo">
+            <div class="halo-circle"></div>
+            <span class="finale-big-heart">💖</span>
+          </div>
+
+          <h2 class="finale-quote">
+            “Out of all the people in this world,<br>
+            I'm really glad our paths crossed.”
+          </h2>
+          
+          <p class="finale-subtext">
+            Before you go, there's just one tiny question left...
+          </p>
+
+          <button id="final-question-btn" class="btn btn-primary btn-lg btn-sparkle" type="button">
+            <span class="btn-text">One Last Question ❤️</span>
+            <span class="btn-shine"></span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ========================================================
+         FOOTER
+         ======================================================== -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-love">Made with love, just for you ❤️</p>
+        <p class="footer-sub">Every smile you gave while reading this made my entire day.</p>
+        <p class="footer-date">Always & Forever ✨</p>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to top" aria-label="Back to top">
+      <svg class="progress-ring" width="46" height="46">
+        <circle class="progress-ring-circle" stroke="#FF758C" stroke-width="3" fill="transparent" r="20" cx="23" cy="23"/>
+      </svg>
+      <span class="arrow-up">↑</span>
+    </button>
+  </div>
+
+  <!-- ========================================================
+       MODALS
+       ======================================================== -->
+
+  <!-- Modal 1: Gift Box Reveal Modal -->
+  <div id="gift-modal" class="modal-overlay is-hidden" role="dialog" aria-modal="true">
+    <div class="modal-card gift-modal-card">
+      <button class="modal-close-btn" id="gift-modal-close" aria-label="Close Modal">&times;</button>
+      <div class="modal-gift-icon" id="modal-gift-icon">🎁</div>
+      <span class="modal-gift-category" id="modal-gift-category">Mystery Surprise</span>
+      <h3 class="modal-gift-title" id="modal-gift-title">A Special Surprise</h3>
+      <div class="modal-gift-content" id="modal-gift-content">
+        <!-- Injected dynamically -->
+      </div>
+      <button class="btn btn-secondary modal-action-btn" id="modal-gift-btn">Aww, thank you! 🥰</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Final Question Modal -->
+  <div id="finale-modal" class="modal-overlay is-hidden" role="dialog" aria-modal="true">
+    <div class="modal-card finale-modal-card">
+      <button class="modal-close-btn" id="finale-modal-close" aria-label="Close Modal">&times;</button>
+      <div class="finale-modal-icon">💍</div>
+      <h3 class="finale-modal-title">One Last Promise...</h3>
+      <p class="finale-modal-question">
+        Will you promise to keep smiling and being the wonderful person you are?
+      </p>
+
+      <div class="finale-options-wrap">
+        <button id="finale-yes-btn" class="btn btn-primary btn-sparkle">
+          <span class="btn-text">Yes, I promise! 💖</span>
+          <span class="btn-shine"></span>
+        </button>
+        <button id="finale-playful-btn" class="btn btn-secondary">
+          <span>Yes, absolutely! 🥰</span>
+        </button>
+      </div>
+
+      <!-- Celebration Card (Revealed after clicking promise) -->
+      <div id="finale-celebration-card" class="finale-celebration is-hidden">
+        <div class="celebration-burst-icon">🎉✨💖</div>
+        <h4 class="celebration-title">You Made My Day! 🥰</h4>
+        <p class="celebration-message">
+          Thank you for being the sunshine in my world. Whenever you have a tough day, remember to visit this little page anytime you need a reminder of how cherished and adored you are.
+        </p>
+        <p class="celebration-ps">
+          P.S. Send me a quick text or screenshot so I know you saw this! 💌
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Letter Modal -->
+  <div id="letter-modal" class="modal-overlay is-hidden" role="dialog" aria-modal="true">
+    <div class="modal-card letter-modal-card">
+      <button class="modal-close-btn" id="letter-modal-close" aria-label="Close Letter">&times;</button>
+      <div class="letter-modal-inner" id="letter-modal-inner">
+        <!-- Cloned letter paper content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor Elements (Desktop only) -->
+  <div id="cursor-heart" class="cursor-heart" aria-hidden="true">❤️</div>
+  <div id="cursor-follower" class="cursor-follower" aria-hidden="true"></div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
+
