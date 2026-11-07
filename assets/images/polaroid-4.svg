@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240">
+  <defs>
+    <linearGradient id="warmPastel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF0ED"/>
+      <stop offset="50%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#F3E5F5"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="240" rx="10" fill="url(#warmPastel)"/>
+
+  <!-- Blanket texture background -->
+  <path d="M 0,200 Q 150,190 300,205 L 300,240 L 0,240 Z" fill="#F8BBD0" opacity="0.4"/>
+
+  <!-- Open Book -->
+  <path d="M 60,170 C 95,160 140,165 150,175 C 160,165 205,160 240,170 L 240,140 C 205,130 160,135 150,145 C 140,135 95,130 60,140 Z" fill="#FFFDF9" stroke="#E0CFBF" stroke-width="2"/>
+  <line x1="150" y1="145" x2="150" y2="175" stroke="#CBB9A8" stroke-width="2"/>
+  
+  <!-- Flower bouquet beside book -->
+  <!-- Tulips / Roses -->
+  <g transform="translate(150, 95)">
+    <!-- Stems -->
+    <path d="M 0,40 Q -10,20 -15,5" stroke="#81C784" stroke-width="3" fill="none"/>
+    <path d="M 0,40 Q 5,20 15,5" stroke="#81C784" stroke-width="3" fill="none"/>
+    <path d="M 0,40 Q 0,15 0,-5" stroke="#81C784" stroke-width="3" fill="none"/>
+
+    <!-- Flowers -->
+    <!-- Center Rose -->
+    <circle cx="0" cy="-10" r="14" fill="#FF8DA1"/>
+    <circle cx="0" cy="-10" r="8" fill="#EE6B8B"/>
+    <circle cx="0" cy="-10" r="3" fill="#FFF"/>
+
+    <!-- Left Tulip -->
+    <path d="M -18,0 C -25,-12 -5,-12 -12,0 Z" fill="#FFB7B2"/>
+
+    <!-- Right Tulip -->
+    <path d="M 12,0 C 5,-12 25,-12 18,0 Z" fill="#FFDAC1"/>
+  </g>
+
+  <!-- Ribbon bookmark with heart -->
+  <path d="M 150,148 Q 155,165 162,185 L 165,182 L 168,185 Q 160,165 150,148 Z" fill="#EE6B8B"/>
+
+  <!-- Sparkles -->
+  <circle cx="65" cy="75" r="2.5" fill="#EE6B8B" opacity="0.6"/>
+  <circle cx="230" cy="85" r="3" fill="#EE6B8B" opacity="0.6"/>
+  <path d="M 85,55 Q 85,60 90,60 Q 85,60 85,65 Q 85,60 80,60 Q 85,60 85,55 Z" fill="#FFD166"/>
+</svg>

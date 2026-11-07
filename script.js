@@ -9,6 +9,10 @@
   /* ========================================================
      GLOBAL STATE & CONFIGURATION
      ======================================================== */
+  // Optional: Set your WhatsApp phone number with country code (e.g. "1234567890" or "919876543210")
+  // If left blank (""), she will be able to select your contact directly in WhatsApp!
+  const SENDER_PHONE_NUMBER = "";
+
   const state = {
     soundEnabled: true,
     theme: 'pastel',
@@ -17,7 +21,9 @@
     currentQuizIndex: 0,
     openedBoxes: new Set(),
     isPlayingMusic: false,
-    synthAudioPlaying: false
+    synthAudioPlaying: false,
+    quizSelections: [],
+    finalPromiseGiven: false
   };
 
   /* ========================================================
@@ -584,6 +590,15 @@
         allBtns.forEach((b) => b.classList.remove('selected'));
         btn.classList.add('selected');
 
+        // Record selection
+        state.quizSelections[state.currentQuizIndex] = {
+          question: q.question,
+          answer: opt.text,
+          reaction: opt.reaction,
+          emoji: opt.emoji
+        };
+        saveAllUserData();
+
         // Show feedback
         feedbackEmoji.textContent = opt.emoji;
         feedbackText.textContent = opt.reaction;
@@ -602,6 +617,20 @@
     });
   }
 
+  function populateQuizSummary() {
+    const summaryEl = document.getElementById('quiz-answers-summary');
+    if (!summaryEl) return;
+    summaryEl.innerHTML = '';
+    state.quizSelections.forEach((item, idx) => {
+      if (item) {
+        const div = document.createElement('div');
+        div.className = 'summary-item';
+        div.innerHTML = `<strong>Q${idx + 1}:</strong> <span class="choice-val">${item.answer}</span>`;
+        summaryEl.appendChild(div);
+      }
+    });
+  }
+
   if (nextQuestionBtn) {
     nextQuestionBtn.addEventListener('click', () => {
       playSound('sparkle');
@@ -610,6 +639,8 @@
         renderQuestion();
       } else {
         // Complete Quiz
+        populateQuizSummary();
+        saveAllUserData();
         quizCard.classList.add('is-hidden');
         quizResultCard.classList.remove('is-hidden');
         playSound('celebrate');
@@ -1045,6 +1076,8 @@
   }
 
   function triggerGrandCelebration() {
+    state.finalPromiseGiven = true;
+    saveAllUserData();
     playSound('celebrate');
     finaleCelebrationCard.classList.remove('is-hidden');
 
@@ -1088,6 +1121,179 @@
       });
     }
   }
+
+  /* ========================================================
+     DATA PERSISTENCE & SHARING (CHECK HER SELECTIONS)
+     ======================================================== */
+  function saveAllUserData() {
+    const payload = {
+      savedAt: new Date().toLocaleString(),
+      quizSelections: state.quizSelections,
+      reasonsCount: state.reasonsUnlocked.size,
+      openedBoxes: Array.from(state.openedBoxes),
+      smilesCount: state.smilesCount,
+      finalPromiseGiven: state.finalPromiseGiven
+    };
+    try {
+      localStorage.setItem('romantic_surprise_data', JSON.stringify(payload));
+    } catch (e) {}
+  }
+
+  function loadSavedUserData() {
+    try {
+      const saved = localStorage.getItem('romantic_surprise_data');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.quizSelections) state.quizSelections = parsed.quizSelections;
+        if (parsed.finalPromiseGiven) state.finalPromiseGiven = parsed.finalPromiseGiven;
+        if (parsed.smilesCount) state.smilesCount = parsed.smilesCount;
+      }
+    } catch (e) {}
+  }
+  loadSavedUserData();
+
+  function generateAnswersText() {
+    let text = "✨ My Answers from Your Surprise Website ❤️ ✨\n\n";
+    text += "🎮 Our Game Choices:\n";
+    if (state.quizSelections && state.quizSelections.length > 0) {
+      state.quizSelections.forEach((item, idx) => {
+        if (item) {
+          text += `• Q${idx + 1}: ${item.question}\n   👉 ${item.answer}\n`;
+        }
+      });
+    } else {
+      text += "(No questions answered yet)\n";
+    }
+
+    if (state.openedBoxes.size > 0) {
+      text += `\n🎁 Gift Boxes Opened: ${Array.from(state.openedBoxes).sort().map(b => 'Box ' + b).join(', ')}\n`;
+    }
+
+    if (state.finalPromiseGiven) {
+      text += `\n💍 Final Promise:\nYes, I promise to keep smiling and being the wonderful person I am! 🥰\n`;
+    }
+
+    text += "\nMade with love just for me ❤️";
+    return text;
+  }
+
+  function sendToWhatsApp() {
+    playSound('sparkle');
+    const text = generateAnswersText();
+    const phoneParam = SENDER_PHONE_NUMBER ? `phone=${encodeURIComponent(SENDER_PHONE_NUMBER)}&` : "";
+    const url = `https://api.whatsapp.com/send?${phoneParam}text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  }
+
+  function shareNative() {
+    playSound('pop');
+    const text = generateAnswersText();
+    if (navigator.share) {
+      navigator.share({
+        title: "My Surprise Website Answers ❤️",
+        text: text
+      }).catch(() => {});
+    } else {
+      copySummaryToClipboard();
+    }
+  }
+
+  function copySummaryToClipboard() {
+    playSound('pop');
+    const text = generateAnswersText();
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('quiz-copy-toast');
+      if (toast) {
+        toast.classList.remove('is-hidden');
+        setTimeout(() => toast.classList.add('is-hidden'), 2500);
+      }
+    }).catch(() => {
+      alert("Answers copied to clipboard! 💖");
+    });
+  }
+
+  // Quiz Share Buttons
+  const sendWhatsappBtn = document.getElementById('send-whatsapp-btn');
+  const shareNativeBtn = document.getElementById('share-native-btn');
+  const copySummaryBtn = document.getElementById('copy-summary-btn');
+
+  if (sendWhatsappBtn) sendWhatsappBtn.addEventListener('click', sendToWhatsApp);
+  if (shareNativeBtn) shareNativeBtn.addEventListener('click', shareNative);
+  if (copySummaryBtn) copySummaryBtn.addEventListener('click', copySummaryToClipboard);
+
+  // Finale Share Buttons
+  const finaleSendWhatsappBtn = document.getElementById('finale-send-whatsapp-btn');
+  const finaleShareNativeBtn = document.getElementById('finale-share-native-btn');
+
+  if (finaleSendWhatsappBtn) finaleSendWhatsappBtn.addEventListener('click', sendToWhatsApp);
+  if (finaleShareNativeBtn) finaleShareNativeBtn.addEventListener('click', shareNative);
+
+  // Secret Answers Viewer for Sender
+  const secretAnswersBtn = document.getElementById('secret-answers-btn');
+  const answersModal = document.getElementById('answers-modal');
+  const answersModalClose = document.getElementById('answers-modal-close');
+  const savedAnswersDisplay = document.getElementById('saved-answers-display');
+  const copyAllAnswersBtn = document.getElementById('copy-all-answers-btn');
+  const exportWhatsappAnswersBtn = document.getElementById('export-whatsapp-answers-btn');
+
+  function openSecretAnswersModal() {
+    playSound('pop');
+    saveAllUserData();
+    const data = JSON.parse(localStorage.getItem('romantic_surprise_data') || '{}');
+    
+    let html = '';
+    if (data.savedAt) {
+      html += `<p style="font-size: 0.8rem; color: #9E8894; margin-bottom: 0.8rem;">Last Recorded: <strong>${data.savedAt}</strong></p>`;
+    }
+
+    if (data.quizSelections && data.quizSelections.length > 0) {
+      html += `<h4 style="font-size: 0.95rem; color: #EE6B8B; margin-bottom: 0.5rem;">🎮 Game Selections:</h4>`;
+      data.quizSelections.forEach((item, i) => {
+        if (item) {
+          html += `<div style="margin-bottom: 0.6rem; padding: 0.5rem; background: rgba(255,245,247,0.85); border-radius: 6px; font-size: 0.86rem; border-left: 3px solid #EE6B8B;">
+            <strong>Q${i + 1}: ${item.question}</strong><br>
+            <span style="color: #D94A6E; font-weight: 600;">Selected: ${item.answer}</span>
+          </div>`;
+        }
+      });
+    } else {
+      html += `<p style="font-size: 0.9rem; color: #745C69; font-style: italic;">No quiz answers recorded yet! Once she plays the game on this device, her selections will be displayed right here. 🌸</p>`;
+    }
+
+    if (data.openedBoxes && data.openedBoxes.length > 0) {
+      html += `<p style="font-size: 0.85rem; margin-top: 0.8rem;">🎁 Mystery Boxes Opened: <strong>${data.openedBoxes.map(b => 'Box ' + b).join(', ')}</strong></p>`;
+    }
+
+    if (data.finalPromiseGiven) {
+      html += `<p style="font-size: 0.85rem; margin-top: 0.5rem; color: #2E7D32; font-weight: 600;">💍 Final Promise: She promised to keep smiling! 🥰</p>`;
+    }
+
+    if (savedAnswersDisplay) {
+      savedAnswersDisplay.innerHTML = html;
+    }
+    if (answersModal) {
+      answersModal.classList.remove('is-hidden');
+    }
+  }
+
+  if (secretAnswersBtn) {
+    secretAnswersBtn.addEventListener('click', openSecretAnswersModal);
+  }
+
+  if (answersModalClose && answersModal) {
+    answersModalClose.addEventListener('click', () => {
+      playSound('pop');
+      answersModal.classList.add('is-hidden');
+    });
+    answersModal.addEventListener('click', (e) => {
+      if (e.target === answersModal) {
+        answersModal.classList.add('is-hidden');
+      }
+    });
+  }
+
+  if (copyAllAnswersBtn) copyAllAnswersBtn.addEventListener('click', copySummaryToClipboard);
+  if (exportWhatsappAnswersBtn) exportWhatsappAnswersBtn.addEventListener('click', sendToWhatsApp);
 
   if (finaleYesBtn) {
     finaleYesBtn.addEventListener('click', triggerGrandCelebration);

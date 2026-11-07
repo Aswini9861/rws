@@ -1192,8 +1192,118 @@ button, a, .reason-card, .envelope, .gift-box-item, .quiz-option-btn {
 
 .result-stars {
   font-size: 1.6rem;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   letter-spacing: 0.3rem;
+}
+
+/* Answers Summary Receipt */
+.answers-summary-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px dashed rgba(238, 107, 139, 0.35);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  margin-bottom: 1.8rem;
+  text-align: left;
+}
+
+[data-theme="twilight"] .answers-summary-card {
+  background: rgba(48, 30, 65, 0.8);
+  border-color: rgba(255, 101, 132, 0.3);
+}
+
+.summary-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--pink-600);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.answers-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.summary-item {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 245, 247, 0.7);
+}
+
+[data-theme="twilight"] .summary-item {
+  background: rgba(60, 40, 80, 0.5);
+}
+
+.summary-item strong {
+  color: var(--text-main);
+}
+
+.summary-item span.choice-val {
+  color: var(--pink-600);
+  font-weight: 600;
+}
+
+.quiz-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.footer-admin-wrap {
+  margin-top: 1.2rem;
+}
+
+.secret-answers-pill {
+  background: transparent;
+  border: 1px dashed rgba(238, 107, 139, 0.35);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.secret-answers-pill:hover {
+  color: var(--pink-600);
+  border-color: var(--pink-500);
+  background: rgba(255, 117, 140, 0.1);
+}
+
+/* Answers Modal Display */
+.saved-answers-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.2rem 0;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+
+[data-theme="twilight"] .saved-answers-scroll {
+  background: rgba(35, 22, 50, 0.8);
+}
+
+.answers-modal-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.answers-modal-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* ========================================================

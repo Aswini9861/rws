@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240">
+  <defs>
+    <linearGradient id="skyNight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1B1035"/>
+      <stop offset="60%" stop-color="#341E5B"/>
+      <stop offset="100%" stop-color="#683D7C"/>
+    </linearGradient>
+    <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#120A24"/>
+      <stop offset="100%" stop-color="#1F1238"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="240" rx="10" fill="url(#skyNight)"/>
+
+  <!-- Stars -->
+  <g fill="#FFF">
+    <circle cx="40" cy="40" r="1.5" opacity="0.8"/>
+    <circle cx="90" cy="25" r="1" opacity="0.6"/>
+    <circle cx="150" cy="50" r="2" opacity="0.9"/>
+    <circle cx="210" cy="30" r="1.5" opacity="0.7"/>
+    <circle cx="260" cy="65" r="1" opacity="0.5"/>
+    <circle cx="180" cy="85" r="1.2" opacity="0.8"/>
+    <circle cx="70" cy="90" r="1.5" opacity="0.7"/>
+    <!-- Sparkle star -->
+    <path d="M 120,40 Q 120,50 128,50 Q 120,50 120,60 Q 120,50 112,50 Q 120,50 120,40 Z" fill="#FFEAA7"/>
+  </g>
+
+  <!-- Glowing Crescent Moon -->
+  <path d="M 235,40 A 24,24 0 0,0 220,76 A 20,20 0 1,1 235,40 Z" fill="#FFF3CD" filter="drop-shadow(0 0 10px rgba(255, 234, 167, 0.6))"/>
+
+  <!-- Rolling Hills -->
+  <path d="M 0,160 Q 100,130 200,165 Q 260,185 300,175 L 300,240 L 0,240 Z" fill="#251642" opacity="0.9"/>
+  <path d="M 0,185 Q 90,165 170,195 Q 240,220 300,195 L 300,240 L 0,240 Z" fill="url(#hillGrad1)"/>
+
+  <!-- Two Little Figures Sitting Together -->
+  <ellipse cx="145" cy="180" rx="5" ry="5" fill="#FFE4E8"/>
+  <path d="M 140,185 C 140,195 150,195 150,185 Z" fill="#FFE4E8"/>
+  
+  <ellipse cx="157" cy="182" rx="4.5" ry="4.5" fill="#FFE4E8"/>
+  <path d="M 152,187 C 152,195 162,195 162,187 Z" fill="#FFE4E8"/>
+
+  <!-- Tiny Glowing Heart floating above -->
+  <path d="M 151,168 C 151,168 147,163 147,160 C 147,157 149,155 151,155 C 152,155 153,156 153,157 C 153,156 154,155 155,155 C 157,155 159,157 159,160 C 159,163 151,168 151,168 Z" fill="#FF758C"/>
+</svg>

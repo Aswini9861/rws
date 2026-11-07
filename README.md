@@ -128,6 +128,44 @@ To use a favorite song of yours:
 1. Place your MP3 file into `assets/music/` and name it `romantic-melody.mp3`.
 2. The website will automatically play your audio file when she clicks play on the vinyl player!
 
+### 6. Receive Her Answers Directly in WhatsApp (Optional)
+In `script.js` on line 14, you can enter your phone number with your country code (digits only):
+```javascript
+const SENDER_PHONE_NUMBER = "1234567890"; // Example: "14155552671" or "919876543210"
+```
+- If set: When she clicks **"Send Answers to Him 💬"**, WhatsApp will open directly into your chat with all her answers pre-filled!
+- If left blank: WhatsApp will simply let her tap your contact from her recent chats list.
+
+---
+
+## 💌 How to See What Options She Selected
+
+Because this is a private, static website without backend tracking or invasive analytics, we designed **three seamless, charming ways** for you to see everything she selected:
+
+### 1. One-Click "Send Answers to Him 💬" (WhatsApp)
+At the end of the Quiz Game and in the Grand Finale celebration, a prominent button lets her send you a pre-formatted message with all her chosen answers and cute emojis:
+> *“✨ My Answers from Your Surprise Website ❤️ ✨*
+> *1. Sleepyhead: We'd both fall asleep together 🧸*
+> *2. More romantic: You, hands down! ✨*
+> *3. Dream trip: A cozy mountain cabin 🏔️*
+> *4. Perfect date: Cooking together 🍝*
+> *5. Apology: Puppy eyes 🐶*
+> *6. Instant smile: A warm tight hug 🫂*
+> *7. Hug or hands: Both please! 💖*
+> *🎁 Gift Boxes Opened: Box 1, Box 2, Box 3, Box 4, Box 5*
+> *💍 Final Promise: Yes, I promise to keep smiling! 🥰”*
+
+### 2. Native Share Sheet (iPhone & Android 📱)
+She can tap **"Share My Answers 💌"** which opens the native iOS / Android share sheet, letting her send it to you via iMessage, SMS, Instagram DM, Telegram, or AirDrop!
+
+### 3. One-Click "Copy Summary 📋"
+She can copy her formatted answer card and paste it straight into your conversation.
+
+### 4. Secret "View Her Answers" Button (On-Device Review Mode 🔒)
+Every choice she makes is automatically saved into her device's local storage (`localStorage`).
+- In the website footer at the bottom, there is a discreet **`🔒 View Her Answers`** button.
+- Clicking it opens an organized summary displaying every question she answered, the exact option she selected, which gift boxes she opened, and the date and time!
+
 ---
 
 ## 🚀 How to Run Locally

@@ -442,7 +442,33 @@
               Whether we're laughing at silly jokes, falling asleep on calls, or planning cozy dates, there is no one else I'd rather share these moments with.
             </p>
             <div class="result-stars">⭐⭐⭐⭐⭐</div>
-            <button id="restart-quiz-btn" class="btn btn-secondary">Play Again 🔄</button>
+
+            <!-- Summary Receipt of Her Selected Answers -->
+            <div class="answers-summary-card">
+              <h4 class="summary-card-title">💌 Your Game Choices:</h4>
+              <div class="answers-summary-list" id="quiz-answers-summary">
+                <!-- Dynamically populated with her choices -->
+              </div>
+            </div>
+
+            <!-- Sharing & Communication Buttons -->
+            <div class="quiz-share-actions">
+              <button id="send-whatsapp-btn" class="btn btn-primary btn-sparkle" type="button">
+                <span class="btn-text">Send Answers to Him 💬</span>
+                <span class="btn-shine"></span>
+              </button>
+              <button id="share-native-btn" class="btn btn-secondary" type="button">
+                <span>Share My Answers 💌</span>
+              </button>
+              <button id="copy-summary-btn" class="btn btn-outline" type="button">
+                <span>Copy Summary 📋</span>
+              </button>
+              <button id="restart-quiz-btn" class="btn btn-outline" type="button">
+                <span>Play Again 🔄</span>
+              </button>
+            </div>
+            
+            <div id="quiz-copy-toast" class="toast is-hidden">Answers copied to clipboard! 💖</div>
           </div>
         </div>
       </section>
@@ -702,6 +728,11 @@
         <p class="footer-love">Made with love, just for you ❤️</p>
         <p class="footer-sub">Every smile you gave while reading this made my entire day.</p>
         <p class="footer-date">Always & Forever ✨</p>
+        <div class="footer-admin-wrap">
+          <button id="secret-answers-btn" class="secret-answers-pill" type="button" title="Review Her Saved Answers">
+            <span>🔒 View Her Answers</span>
+          </button>
+        </div>
       </div>
     </footer>
 
@@ -765,6 +796,16 @@
         <p class="celebration-ps">
           P.S. Send me a quick text or screenshot so I know you saw this! 💌
         </p>
+
+        <div class="finale-share-actions">
+          <button id="finale-send-whatsapp-btn" class="btn btn-primary btn-sparkle" type="button">
+            <span class="btn-text">Send Him Your Reaction & Answers 💬</span>
+            <span class="btn-shine"></span>
+          </button>
+          <button id="finale-share-native-btn" class="btn btn-secondary" type="button">
+            <span>Share My Reaction 💌</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -775,6 +816,26 @@
       <button class="modal-close-btn" id="letter-modal-close" aria-label="Close Letter">&times;</button>
       <div class="letter-modal-inner" id="letter-modal-inner">
         <!-- Cloned letter paper content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Saved Selections & Answers Modal (Admin/Sender Review) -->
+  <div id="answers-modal" class="modal-overlay is-hidden" role="dialog" aria-modal="true">
+    <div class="modal-card answers-modal-card">
+      <button class="modal-close-btn" id="answers-modal-close" aria-label="Close Answers Modal">&times;</button>
+      <div class="modal-gift-icon">📜</div>
+      <span class="modal-gift-category">Recorded Responses</span>
+      <h3 class="modal-gift-title">Her Choices & Reactions</h3>
+      <p class="answers-modal-subtitle">
+        Everything she selected while exploring your website is saved here in her browser!
+      </p>
+      <div class="saved-answers-scroll" id="saved-answers-display">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="answers-modal-actions">
+        <button id="copy-all-answers-btn" class="btn btn-primary btn-sm" type="button">Copy All to Clipboard 📋</button>
+        <button id="export-whatsapp-answers-btn" class="btn btn-secondary btn-sm" type="button">Open in WhatsApp 💬</button>
       </div>
     </div>
   </div>
