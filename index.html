@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="A cute, romantic, interactive surprise website made with love for someone truly special.">
   <meta name="theme-color" content="#FCE7EC">
+  
+  <!-- Apple iOS Mobile Web App Settings -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="For You ❤️">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="assets/images/favicon.svg">
   
   <title>A Special Surprise For You ❤️</title>
   
@@ -354,6 +361,7 @@
 
               <!-- Envelope Pocket (Front Panels) -->
               <div class="envelope-front-pocket"></div>
+              <div class="envelope-pocket-bottom"></div>
               
               <!-- Envelope Flap (Top Triangle) -->
               <div class="envelope-flap" id="envelope-flap"></div>
@@ -735,12 +743,15 @@
       </p>
 
       <div class="finale-options-wrap">
-        <button id="finale-yes-btn" class="btn btn-primary btn-sparkle">
+        <button id="finale-yes-btn" class="btn btn-primary btn-sparkle" type="button">
           <span class="btn-text">Yes, I promise! 💖</span>
           <span class="btn-shine"></span>
         </button>
-        <button id="finale-playful-btn" class="btn btn-secondary">
-          <span>Yes, absolutely! 🥰</span>
+        <button id="finale-playful-btn" class="btn btn-secondary" type="button">
+          <span id="playful-btn-text">Yes, absolutely! 🥰</span>
+        </button>
+        <button id="finale-dodge-btn" class="btn btn-outline btn-dodge" type="button">
+          <span id="dodge-btn-text">No way 😜</span>
         </button>
       </div>
 

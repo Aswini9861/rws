@@ -38,6 +38,15 @@
     return audioCtx;
   }
 
+  // Early unlock for Apple iOS WebKit Safari audio
+  function unlockIOSAudio() {
+    getAudioContext();
+    window.removeEventListener('touchstart', unlockIOSAudio);
+    window.removeEventListener('click', unlockIOSAudio);
+  }
+  window.addEventListener('touchstart', unlockIOSAudio, { once: true, passive: true });
+  window.addEventListener('click', unlockIOSAudio, { once: true, passive: true });
+
   // Play gentle synthesized sound effects
   function playSound(type) {
     if (!state.soundEnabled) return;
@@ -977,12 +986,61 @@
   const finaleModalClose = document.getElementById('finale-modal-close');
   const finaleYesBtn = document.getElementById('finale-yes-btn');
   const finalePlayfulBtn = document.getElementById('finale-playful-btn');
+  const finaleDodgeBtn = document.getElementById('finale-dodge-btn');
+  const dodgeBtnText = document.getElementById('dodge-btn-text');
   const finaleCelebrationCard = document.getElementById('finale-celebration-card');
 
   if (finalQuestionBtn && finaleModal) {
     finalQuestionBtn.addEventListener('click', () => {
       playSound('sparkle');
       finaleModal.classList.remove('is-hidden');
+    });
+  }
+
+  // Playful runaway dodge button logic
+  let dodgeCount = 0;
+  const dodgePhrases = [
+    "Hey! Can't click this! 😜",
+    "Smiling is mandatory! 🥰",
+    "Nice try, cutie! 🏃‍♂️💨",
+    "Resistance is impossible! ❤️",
+    "Okay fine, I promise! 💖"
+  ];
+
+  function runAwayButton(e) {
+    if (dodgeCount >= dodgePhrases.length - 1) {
+      // Turned into positive promise!
+      triggerGrandCelebration();
+      return;
+    }
+
+    if (e && e.type === 'touchstart') {
+      e.preventDefault(); // prevent triggering click immediately on touch
+    }
+
+    playSound('pop');
+    dodgeCount++;
+    if (dodgeBtnText) {
+      dodgeBtnText.textContent = dodgePhrases[dodgeCount] || dodgePhrases[0];
+    }
+
+    if (dodgeCount < dodgePhrases.length - 1) {
+      const offsetX = (Math.random() - 0.5) * 120;
+      const offsetY = (Math.random() - 0.5) * 80;
+      finaleDodgeBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    } else {
+      // Last state: resets position and becomes a primary celebration button
+      finaleDodgeBtn.style.transform = 'translate(0, 0)';
+      finaleDodgeBtn.classList.remove('btn-outline');
+      finaleDodgeBtn.classList.add('btn-primary');
+    }
+  }
+
+  if (finaleDodgeBtn) {
+    finaleDodgeBtn.addEventListener('mouseenter', runAwayButton);
+    finaleDodgeBtn.addEventListener('touchstart', runAwayButton, { passive: false });
+    finaleDodgeBtn.addEventListener('click', () => {
+      triggerGrandCelebration();
     });
   }
 
